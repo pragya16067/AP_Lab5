@@ -143,7 +143,7 @@ public class Lab5 {
 		
 		BSTFilesBuilder builder=new BSTFilesBuilder();
 		//Now input files will be created containing information about the trees named 1.txt,2.txt and so on till TreeNo.txt
-		//builder.createBSTFiles(KidsNo, TreeNo);
+		builder.createBSTFiles(KidsNo, TreeNo);
 		
 		HashMap <Integer, ArrayList<Object>> H=new HashMap <Integer, ArrayList<Object>> ();
 		//create all keys as roll no of students
