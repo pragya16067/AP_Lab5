@@ -7,11 +7,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 import java.util.StringTokenizer;
+import java.io.PrintWriter;
+
+//The various Collections Framework Used
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+
 
 class BSTNode<T> {
 	
@@ -56,6 +60,7 @@ class BST <T extends Comparable<T>> {
 		 RootNode=new BSTNode<T>(rootval);
 	}
 	
+		
 	public BSTNode<T> insert(BSTNode<T> root, T val) {
 		if(root==null)
 		{
@@ -84,6 +89,19 @@ class BST <T extends Comparable<T>> {
 			PrintInorder(curr.left);
 			System.out.print(curr.getData()+" ");
 			PrintInorder(curr.right);
+		}
+	}
+	
+	public void getInorder(BSTNode<T> curr,ArrayList<T> inorder) {
+		if(curr==null)
+		{
+			return;
+		}
+		else
+		{
+			getInorder(curr.left,inorder);
+			inorder.add(curr.getData());
+			getInorder(curr.right,inorder);
 		}
 	}
 	
@@ -125,7 +143,7 @@ public class Lab5 {
 		
 		BSTFilesBuilder builder=new BSTFilesBuilder();
 		//Now input files will be created containing information about the trees named 1.txt,2.txt and so on till TreeNo.txt
-		builder.createBSTFiles(KidsNo, TreeNo);
+		//builder.createBSTFiles(KidsNo, TreeNo);
 		
 		HashMap <Integer, ArrayList<Object>> H=new HashMap <Integer, ArrayList<Object>> ();
 		//create all keys as roll no of students
@@ -180,12 +198,17 @@ public class Lab5 {
 			{
 				String root=ReaderFromFile.next();
 				BST<String> bst=new BST<String> (root);
-				ans=root;
+				ArrayList<String> inorder=new ArrayList<String> ();
+				ans="";
 				for(int ctr=1; ctr<n; ctr++)
 				{
 					String s=ReaderFromFile.next();
 					bst.insert(bst.RootNode, s);
-					ans=ans+s;
+				}
+				bst.getInorder(bst.RootNode, inorder);
+				for(int l=0; l<inorder.size(); l++)
+				{
+					ans=ans+inorder.get(l);
 				}
 				//bst.PrintInorder(bst.RootNode);
 				childNo=bst.findCorrespondingStudent(bst.RootNode, 1);
@@ -205,9 +228,11 @@ public class Lab5 {
 		//now for final output display
 		
 		PrintWriter OPwrite = new PrintWriter("./src/Output.txt", "UTF-8");
-		for(int k=1; k<=KidsNo; k++)
+		Iterator<Integer> itr=H.keySet().iterator();
+		int k=1;
+		while(itr.hasNext())
 		{
-			ArrayList<Object> o=H.get(k);
+			ArrayList<Object> o=H.get(itr.next());
 			if(o.size()==0)
 			{
 				chocoKids++;
@@ -221,6 +246,7 @@ public class Lab5 {
 				}
 				OPwrite.println();
 			}
+			k++;
 		}
 		OPwrite.println(chocoKids);
 		OPwrite.close();
