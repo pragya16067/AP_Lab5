@@ -88,6 +88,7 @@ class BST <T extends Comparable<T>> {
 	}
 	
 	public int findCorrespondingStudent (BSTNode<T> curNode, int pos) {
+		//Find position of root node while performing inorder traversal
 		if(curNode==null)
 		{
 			return pos;
@@ -95,12 +96,14 @@ class BST <T extends Comparable<T>> {
 		else
 		{
 			pos=findCorrespondingStudent(curNode.left,pos);
+			//If this is the root node then return it's position
 			if(curNode.equals(RootNode,curNode))
 			{
 				return pos;
 			}
 			else
 			{
+				//increase position by one
 				pos=pos+1;
 			}
 			
@@ -176,7 +179,6 @@ public class Lab5 {
 			else
 			{
 				String root=ReaderFromFile.next();
-				
 				BST<String> bst=new BST<String> (root);
 				ans=root;
 				for(int ctr=1; ctr<n; ctr++)
@@ -271,7 +273,7 @@ class BSTFilesBuilder {
 }
 
 
-/** Class for buffered reading int and double values */
+/** Class for buffered reading from Input Stream */
 class Reader {
     static BufferedReader reader;
     static StringTokenizer tokenizer;
@@ -310,7 +312,7 @@ class Reader {
     }
 }
 
-/** Class for buffered reading int and double values */
+/** Class for buffered reading from Files */
 class ReaderFromFile {
     static BufferedReader reader;
     static StringTokenizer tokenizer;
